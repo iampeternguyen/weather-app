@@ -2,6 +2,9 @@ const path = require('path');
 const express = require('express');
 const hbs = require('hbs');
 
+const geocode = require('./utils/geocode');
+const forecast = require('./utils/forecast');
+
 const app = express();
 const publicDirectoryPath = path.join(__dirname, '../public');
 const viewsDirectoryPath = path.join(__dirname, '../templates/views');
@@ -29,7 +32,24 @@ app.get('/help', (req, res) => {
 });
 
 app.get('/weather', (req, res) => {
-	res.send({ location: 'Philadelphia', weather: '35 degrees' });
+	if (!req.query.address) {
+		return res.send({ error: 'You must specify a location' });
+	}
+
+	geocode(req.query.address, (error, address) => {
+		if (error) {
+			return res.send({ error });
+		}
+
+		const { location, longitude, latitude } = address;
+
+		forecast(latitude, longitude, (error, weather) => {
+			if (error) {
+				return res.send({ error });
+			}
+			res.send({ location, weather, search: req.query.address });
+		});
+	});
 });
 
 app.get('/help/*', (req, res) => {
