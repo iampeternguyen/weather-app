@@ -27,9 +27,27 @@ app.get('/about', (req, res) => {
 app.get('/help', (req, res) => {
 	res.render('help', { title: 'Help', message: 'How can we help you today?', name: 'Peter Nguyen' });
 });
+
 app.get('/weather', (req, res) => {
 	res.send({ location: 'Philadelphia', weather: '35 degrees' });
 });
+
+app.get('/help/*', (req, res) => {
+	res.render('404', {
+		title: '404',
+		message: 'Help article not found.',
+		name: 'Peter Nguyen',
+	});
+});
+
+app.get('*', (req, res) => {
+	res.render('404', {
+		title: '404',
+		message: 'Page not found.',
+		name: 'Peter Nguyen',
+	});
+});
+
 app.listen(3000, () => {
 	console.log('Server is up on port 3000.');
 });
