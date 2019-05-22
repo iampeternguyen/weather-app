@@ -36,12 +36,10 @@ app.get('/weather', (req, res) => {
 		return res.send({ error: 'You must specify a location' });
 	}
 
-	geocode(req.query.address, (error, address) => {
+	geocode(req.query.address, (error, { location, longitude, latitude } = {}) => {
 		if (error) {
 			return res.send({ error });
 		}
-
-		const { location, longitude, latitude } = address;
 
 		forecast(latitude, longitude, (error, weather) => {
 			if (error) {
