@@ -12,7 +12,7 @@ weatherForm.addEventListener('submit', event => {
 	locationInfo.textContent = '';
 	weatherInfo.textContent = 'Loading';
 
-	fetch(`http://localhost:3000/weather?address=${location}`)
+	fetch(`/weather?address=${location}`)
 		.then(response => {
 			return response.json();
 		})
