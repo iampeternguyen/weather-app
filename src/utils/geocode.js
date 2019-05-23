@@ -1,5 +1,5 @@
 const request = require('request');
-const MAPBOXAPIKEY = require('./configvars').MAPBOX || undefined;
+const MAPBOXAPIKEY = process.env.MAPBOX || require('./configvars').MAPBOX || undefined;
 
 if (!MAPBOXAPIKEY) {
 	return console.log('API key for mapbox not found!');

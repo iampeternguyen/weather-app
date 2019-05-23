@@ -1,5 +1,5 @@
 const request = require('request');
-const DARKSKYAPIKEY = require('./configvars').DARKSKY || undefined;
+const DARKSKYAPIKEY = process.env.DARKSKY || require('./configvars').DARKSKY || undefined;
 
 if (!DARKSKYAPIKEY) {
 	return console.log('API key for darksky not found!');
