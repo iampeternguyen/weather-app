@@ -1,9 +1,10 @@
 const request = require('request');
+const SECRET_KEYS = require('./configvars') || undefined;
 
 const geocode = (location, callback) => {
-	const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(
-		location
-	)}.json?access_token=***REMOVED***&limit=1`;
+	const url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(location)}.json?access_token=${
+		SECRET_KEYS.MAPBOX
+	}&limit=1`;
 
 	request({ url, json: true }, (error, { body }) => {
 		if (error) {
